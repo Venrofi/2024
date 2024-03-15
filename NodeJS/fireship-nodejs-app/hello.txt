@@ -1,0 +1,1 @@
+📝 Node.js is a powerful JavaScript runtime built on Chrome's V8 JavaScript engine. It allows developers to run JavaScript code outside of a web browser, making it ideal for server-side and command-line applications. Node.js provides an event-driven, non-blocking I/O model, which makes it highly efficient and scalable.
