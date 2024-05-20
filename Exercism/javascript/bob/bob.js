@@ -1,11 +1,13 @@
 export const hey = (message) => {
 	const defaultResponse = "Whatever.";
 
+	message = message.trim();
+
 	// silence messages (whitespace)
-	if (message.length === 0 || message.trim().length === 0) return "Fine. Be that way!";
+	if (!message) return "Fine. Be that way!";
 
 	// question
-	if (message.trim().endsWith("?")) {
+	if (message.endsWith("?")) {
 		// yelling question
 		if (message.toUpperCase() !== message.toLowerCase() && message.toUpperCase() === message)
 			return "Calm down, I know what I'm doing!";
