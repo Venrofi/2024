@@ -18,19 +18,7 @@ export class Clock {
 	}
 
 	toString() {
-		let time = "";
-
-		if (this.hour < 10) {
-			time += "0";
-		}
-		time += `${this.hour}:`;
-
-		if (this.minutes < 10) {
-			time += "0";
-		}
-		time += this.minutes;
-
-		return time;
+		return `${this.hour}`.padStart(2, "0") + ":" + `${this.minutes}`.padStart(2, "0");
 	}
 
 	plus(value) {
