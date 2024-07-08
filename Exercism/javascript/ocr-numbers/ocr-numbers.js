@@ -20,7 +20,7 @@ export const convert = (input) => {
 			result += ",";
 		}
 
-		for (let column = 0; column < rows[0].length; column += 3) {
+		for (let column = 0; column < rows[blockIndex].length; column += 3) {
 			const digitPattern = rows
 				.slice(blockIndex, blockIndex + 3)
 				.map((row) => row.slice(column, column + 3))
