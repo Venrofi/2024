@@ -10,7 +10,6 @@ export const say = (n) => {
 	let result = "";
 
 	while (number > 0) {
-		// console.log(number, result);
 		const digits = number.toString();
 		result += result.length > 0 ? " " : "";
 
@@ -100,7 +99,6 @@ const translateSmallNumber = (number) => {
 };
 
 const TRANSLATIONS = {
-	0: "zero",
 	1: "one",
 	2: "two",
 	3: "three",
