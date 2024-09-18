@@ -1,7 +1,6 @@
 export class Bowling {
 	constructor() {
 		this._frames = [];
-		this._score = 0;
 		this.hasGameFinished = false;
 	}
 
@@ -68,6 +67,7 @@ export class Bowling {
 
 		const rolls = this._frames.flat();
 		let rollIndex = 0;
+		let gameScore = 0;
 
 		this._frames.forEach((frame, index) => {
 			if (index >= GAME_FRAMES) return;
@@ -82,17 +82,17 @@ export class Bowling {
 					const strikeBonus = rolls
 						.slice(rollIndex, rollIndex + 2)
 						.reduce((sum, pins) => (sum += pins));
-					this._score += frameScore + strikeBonus;
+					gameScore += frameScore + strikeBonus;
 				} else if (ballCounts === 2) {
 					const spareBonus = rolls[rollIndex];
-					this._score += frameScore + spareBonus;
+					gameScore += frameScore + spareBonus;
 				}
 			} else {
-				this._score += frameScore;
+				gameScore += frameScore;
 			}
 		});
 
-		return this._score;
+		return gameScore;
 	}
 }
 
