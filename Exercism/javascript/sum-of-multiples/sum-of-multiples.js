@@ -1,15 +1,8 @@
 export const sum = (magicalItems, level) => {
-  let multiples = [];
+  const multiples = magicalItems.flatMap((item) => {
+    if (item === 0) return item;
 
-  magicalItems.forEach((item) => {
-    if (item === 0) {
-      multiples.push(item);
-      return;
-    }
-
-    for (let i = item; i < level; i += item) {
-      multiples.push(i);
-    }
+    return Array.from({ length: Math.floor((level - 1) / item) }, (_, i) => (i + 1) * item);
   });
 
   const uniqueMultiples = [...new Set(multiples)];
