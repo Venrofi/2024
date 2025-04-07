@@ -1,46 +1,28 @@
 export class Change {
-  calculate(coinArray = [], target = 0) {
-    const availableCoins = coinArray.toReversed();
-    const changeOptions = [];
+  calculate(coinValues = [], targetAmount = 0) {
+    if (targetAmount === 0) return [];
+    if (targetAmount < 0) throw new Error('Negative totals are not allowed.');
 
-    if (target === 0) {
-      return [];
-    }
+    const minCoinsForAmount = Array(targetAmount + 1).fill(null);
+    minCoinsForAmount[0] = [];
 
-    if (target < 0) {
-      throw new Error('Negative totals are not allowed.');
-    }
+    for (const coin of coinValues) {
+      for (let currentAmount = coin; currentAmount <= targetAmount; currentAmount++) {
 
-    if (target < coinArray[0]) {
-      throw new Error(`The total ${target} cannot be represented in the given currency.`)
-    }
+        if (minCoinsForAmount[currentAmount - coin] !== null) {
+          const newCombination = [...minCoinsForAmount[currentAmount - coin], coin];
 
-    for (let i = 0; i < availableCoins.length; i++) {
-      const change = this.getChange(availableCoins.slice(i), target);
-
-      if (change.length > 0) {
-        changeOptions.push(change);
+          if (!minCoinsForAmount[currentAmount] || newCombination.length < minCoinsForAmount[currentAmount].length) {
+            minCoinsForAmount[currentAmount] = newCombination;
+          }
+        }
       }
     }
 
-    if (changeOptions.length === 0) {
-      throw new Error(`The total ${target} cannot be represented in the given currency.`);
+    if (!minCoinsForAmount[targetAmount]) {
+      throw new Error(`The total ${targetAmount} cannot be represented in the given currency.`);
     }
 
-    return changeOptions.reduce((min, change) => change.length < min.length ? change : min, changeOptions[0]);
-  }
-
-  getChange(coinArray = [], target = 0) {
-    const change = [];
-    let targetValue = target;
-
-    for (const coin of coinArray) {
-      while (targetValue >= coin) {
-        change.push(coin);
-        targetValue -= coin;
-      }
-    }
-
-    return targetValue === 0 ? change.reverse() : [];
+    return minCoinsForAmount[targetAmount];
   }
 }
