@@ -1,54 +1,30 @@
+const ADJACENTS = [
+  [0, 1],
+  [0, -1],
+  [1, 1],
+  [1, 0],
+  [1, -1],
+  [-1, -1],
+  [-1, 0],
+  [-1, 1]
+];
+
 export const annotate = (input = []) => {
-  let output = input.map(row => row.split(''));
-  const numRows = input.length;
+  let board = input.map(row => row.split(''));
 
-  for (let row = 0; row < numRows; row++) {
-    const numCols = input[row]?.length;
-
-    for (let col = 0; col < numCols; col++) {
+  for (let row = 0; row < input.length; row++) {
+    for (let col = 0; col < input[row].length; col++) {
       if (input[row][col] === '*') continue;
 
-      let count = 0;
-
-      if (row > 0) {
-        if (input[row - 1][col] === '*') {
-          count += 1;
-        }
-
-        if (col < numCols - 1 && input[row - 1][col + 1] === '*') {
-          count += 1;
-        }
-
-        if (col > 0 && input[row - 1][col - 1] === '*') {
-          count += 1;
-        }
-      }
-
-      if (row < numRows - 1) {
-        if (input[row + 1][col] === '*') {
-          count += 1;
-        }
-
-        if (col < numCols - 1 && input[row + 1][col + 1] === '*') {
-          count += 1;
-        }
-
-        if (col > 0 && input[row + 1][col - 1] === '*') {
-          count += 1;
-        }
-      }
-
-      if (col > 0 && input[row][col - 1] === '*') {
-        count += 1;
-      }
-
-      if (col < numCols - 1 && input[row][col + 1] === '*') {
-        count += 1;
-      }
-
-      output[row][col] = count > 0 ? count.toString() : ' ';
+      board[row][col] = countMine(board, row, col);
     }
   }
 
-  return output.map(row => row.join(''));
+  return board.map(row => row.join(''));
 };
+
+function countMine(board, x, y) {
+  const count = ADJACENTS.filter(([a, b]) => board[x + a] && board[x + a][y + b] && board[x + a][y + b] === '*').length;
+
+  return count ? count : ' ';
+}
